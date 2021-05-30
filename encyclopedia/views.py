@@ -1,5 +1,6 @@
+from unicodedata import name
 from django.http.response import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django import forms
 
 from . import util
@@ -17,21 +18,7 @@ def index(request):
         form = MyForm(request.POST)
         if form.is_valid():
             query = form.cleaned_data["search_object"]
-            
-            entry = util.get_entry(query) 
-
-            if entry:
-                return render(request, "encyclopedia/content.html", {
-                "name": query.capitalize(),
-                "content": markdown2.markdown(entry),
-                "form": MyForm()
-
-            })
-            else:
-                return render(request, "encyclopedia/unknown.html", {
-                "name": query,
-                "form": MyForm()
-                })
+            return redirect("content", name = query)
 
     return render(request, "encyclopedia/index.html", {
     "entries": util.list_entries(),
@@ -45,21 +32,20 @@ def content(request, name):
         form = MyForm(request.POST)
         if form.is_valid():
             query = form.cleaned_data["search_object"]
-    else:
-        query = name
+            return redirect("content", name = query)
 
-    entry = util.get_entry(query)
+    entry = util.get_entry(name)
 
     if entry:
         return render(request, "encyclopedia/content.html", {
-            "name": query.capitalize(),
+            "name": name.capitalize(),
             "content": markdown2.markdown(entry),
             "form": MyForm()
 
         })
     else:
         return render(request, "encyclopedia/unknown.html", {
-        "name": query,
+        "name": name,
         "form": MyForm()
         })
 
