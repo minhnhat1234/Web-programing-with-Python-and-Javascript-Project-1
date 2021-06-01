@@ -5,5 +5,13 @@
 {% endblock %}
 
 {% block body %}
-    <h2>There are no search results matching with your request "{{name}}".</h2>
+    <h2>Oops, there are no search results matching with your request "{{name}}".</h2>
+    {% if len(entries) > 0%}
+        <h4>Did you mean:</h4>
+    {% endif %}
+    <ul>
+        {% for entry in entries %}
+            <li><a href = "{% url 'content' entry %}">{{ entry }}</a></li>
+        {% endfor %}
+    </ul>
 {% endblock %}

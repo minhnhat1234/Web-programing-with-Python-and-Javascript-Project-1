@@ -10,6 +10,8 @@ import markdown2
 class MyForm(forms.Form):
     search_object = forms.CharField()
 
+entries = util.list_entries()
+
 def index(request):
 
     query = None
@@ -21,7 +23,7 @@ def index(request):
             return redirect("content", name = query)
 
     return render(request, "encyclopedia/index.html", {
-    "entries": util.list_entries(),
+    "entries": entries,
     "form": MyForm(),
     "query": query
     })
@@ -44,8 +46,10 @@ def content(request, name):
 
         })
     else:
+        matches = filter(entries, name_contained = name)
         return render(request, "encyclopedia/unknown.html", {
         "name": name,
-        "form": MyForm()
+        "form": MyForm(),
+        "entries": matches
         })
 

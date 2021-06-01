@@ -1,0 +1,32 @@
+[
+    {
+        "model": "encyclopedia.Entries",
+        "fields": {
+            "name": "CSS"
+        }
+    },
+    {
+        "model": "encyclopedia.Entries",
+        "fields": {
+            "name": "Django"
+        }
+    },
+    {
+        "model": "encyclopedia.Entries",
+        "fields": {
+            "name": "Git"
+        }
+    },
+    {
+        "model": "encyclopedia.Entries",
+        "fields": {
+            "name": "HTML"
+        }
+    },
+    {
+        "model": "encyclopedia.Entries",
+        "fields": {
+            "name": "Python"
+        }
+    }
+]
