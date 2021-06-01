@@ -6,7 +6,7 @@
 
 {% block body %}
     <h2>Oops, there are no search results matching with your request "{{name}}".</h2>
-    {% if len(entries) > 0%}
+    {% if entries|length > 0%}
         <h4>Did you mean:</h4>
     {% endif %}
     <ul>

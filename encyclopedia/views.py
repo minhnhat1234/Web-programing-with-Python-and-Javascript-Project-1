@@ -2,6 +2,7 @@ from unicodedata import name
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django import forms
+from .models import Entries
 
 from . import util
 
@@ -9,8 +10,6 @@ import markdown2
 
 class MyForm(forms.Form):
     search_object = forms.CharField()
-
-entries = util.list_entries()
 
 def index(request):
 
@@ -23,9 +22,8 @@ def index(request):
             return redirect("content", name = query)
 
     return render(request, "encyclopedia/index.html", {
-    "entries": entries,
-    "form": MyForm(),
-    "query": query
+    "entries": Entries.objects.all(),
+    "form": MyForm()
     })
 
 def content(request, name):
@@ -46,10 +44,13 @@ def content(request, name):
 
         })
     else:
-        matches = filter(entries, name_contained = name)
+        matches_dict = Entries.objects.filter(name__contains = name).values("name")
+        matches_list = [entry["name"] for entry in matches_dict]
+        print(matches_list)
+        print(len(matches_list))
         return render(request, "encyclopedia/unknown.html", {
         "name": name,
         "form": MyForm(),
-        "entries": matches
+        "entries": matches_list
         })
 
