@@ -25,7 +25,7 @@
             {% endfor %}
         {% endif %}
         <div class="row">
-            <div class="sidebar col-lg-2 col-md-3">
+            <div class="sidebar col-lg-2 col-md-3" style = "background-color: rgb(239, 239, 239)">
                 <h2>Wiki</h2>
                 <form method = "post">
                     {% csrf_token %}
@@ -35,10 +35,10 @@
                     <a href="{% url 'index' %}">Home</a>
                 </div>
                 <div>
-                    Create New Page
+                    <a href = "{% url "create" %}">Create New Page </a>
                 </div>
                 <div>
-                    Random Page
+                    <a href = "{% url "content" random %}">Random Page</a>
                 </div>
                 {% block nav %}
                 {% endblock %}
