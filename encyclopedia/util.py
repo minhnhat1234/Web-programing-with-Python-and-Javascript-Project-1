@@ -35,3 +35,10 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+def save_file(filename, filedata):
+    try:
+        f = open(filename , "w")
+        f.write(filedata)
+    except:
+        pass
